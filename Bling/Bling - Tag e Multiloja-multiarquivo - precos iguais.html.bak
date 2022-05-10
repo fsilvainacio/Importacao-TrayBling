@@ -296,14 +296,14 @@
 						
 						var jaAcabouPaiTray = false;
 						for (var at = 0; at < arquivo_texto.length; at++) {
-							if ( at >= 6 ) {
+							if ( at >= 8 ) { // AQUI 6 quando convertido pelo excel e 8 quando convertido pelo libreoffice
 							
 								if ( arquivo_texto[at][0] == '' || jaAcabouPaiTray) {
 									jaAcabouPaiTray = true;
 									continue;
 								}
 								// Verificar cabeçalho
-								if (at == 6) {
+								if (at == 8) { // AQUI 6 quando convertido pelo excel e 8 quando convertido pelo libreoffice
 									if (
 										arquivo_texto[at][0] != "ID" ||
 										arquivo_texto[at][1] != "PRODUTO" ||

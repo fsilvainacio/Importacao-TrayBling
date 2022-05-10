@@ -584,9 +584,9 @@
 				}
 				
 				// Aplicar Origem de acordo com a Marca (5 - Origem)
-				//if (produtos[produtos.length - 1][5].trim() == "") {
+				if (produtos[produtos.length - 1][5].trim() == "") {
 					produtos[produtos.length - 1][5] = get_origem(produtos[produtos.length - 1][38]);
-				//}
+				}
 				
 				// Aplicar NCM de acordo com a categoria (4 - Classificação fiscal)
 				if (produtos[produtos.length - 1][4].trim() == "") {
