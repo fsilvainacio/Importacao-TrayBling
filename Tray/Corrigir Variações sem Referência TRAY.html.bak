@@ -319,6 +319,8 @@
 							continue;
 						}
 						
+						console.info(v_indexREFERENCIA, 'fileLine', fileLine, fileLine[v_indexREFERENCIA])
+						
 						var referencia_variacao = fileLine[v_indexREFERENCIA].trim();
 						
 						var referencia_v 	= '';
