@@ -83,12 +83,12 @@ function dados_categorias() {
 		[['', ''], 'Pet',	'249 - CASA INTELIGENTE>>257 - Pet'],
 		[['', ''], 'Saúde',	'249 - CASA INTELIGENTE>>259 - Saúde'],
 		
-		[['9405.11.90', '21.123.00'], 'TRILHOS E SPOTS',	'53 - TRILHOS E SPOTS'],
-		[['9405.11.90', '21.123.00'], 'Kit Trilho e Spots',	'53 - TRILHOS E SPOTS>>127 - Kit Trilho e Spots'],
-		[['9405.11.90', '21.123.00'], 'Luminárias para Trilho',	'53 - TRILHOS E SPOTS>>129 - Luminárias para Trilho'],
-		[['9405.11.90', '21.123.00'], 'Trilhos',	'53 - TRILHOS E SPOTS>>55 - Trilhos'],
-		[['9405.11.90', '21.123.00'], 'Spots para Trilho',	'53 - TRILHOS E SPOTS>>57 - Spots para Trilho'],
-		[['9405.11.90', '21.123.00'], 'Acessórios para Trilho e Spot',	'53 - TRILHOS E SPOTS>>59 - Acessórios para Trilho e Spot'],
+		[['9405.11.90', '21.123.00'], 'TRILHOS',	'53 - TRILHOS'],
+		[['9405.11.90', '21.123.00'], 'Kit Trilho e Spots',	'53 - TRILHOS>>127 - Kit Trilho e Spots'],
+		[['9405.11.90', '21.123.00'], 'Luminárias para Trilho',	'53 - TRILHOS>>129 - Luminárias para Trilho'],
+		[['9405.11.90', '21.123.00'], 'Trilhos',	'53 - TRILHOS>>55 - Trilhos'],
+		[['9405.11.90', '21.123.00'], 'Spots para Trilho',	'53 - TRILHOS>>57 - Spots para Trilho'],
+		[['9405.11.90', '21.123.00'], 'Acessórios para Trilho e Spot',	'53 - TRILHOS>>59 - Acessórios para Trilho e Spot'],
 	
 		[['9405.11.90', '21.123.00'], 'PERFIL LED',	'61 - PERFIL LED'],
 		[['9405.11.90', '21.123.00'], 'Perfil de Embutir',	'61 - PERFIL LED>>63 - Perfil de Embutir'],

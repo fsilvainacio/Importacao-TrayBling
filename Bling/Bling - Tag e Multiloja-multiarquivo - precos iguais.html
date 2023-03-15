@@ -296,14 +296,14 @@
 						
 						var jaAcabouPaiTray = false;
 						for (var at = 0; at < arquivo_texto.length; at++) {
-							if ( at >= 8 ) { // AQUI 6 quando convertido pelo excel e 8 quando convertido pelo libreoffice
+							if ( at >= 6 ) { // AQUI 6 quando convertido pelo excel e 8 quando convertido pelo libreoffice
 							
 								if ( arquivo_texto[at][0] == '' || jaAcabouPaiTray) {
 									jaAcabouPaiTray = true;
 									continue;
 								}
 								// Verificar cabeçalho
-								if (at == 8) { // AQUI 6 quando convertido pelo excel e 8 quando convertido pelo libreoffice
+								if (at == 6) { // AQUI 6 quando convertido pelo excel e 8 quando convertido pelo libreoffice
 									if (
 										arquivo_texto[at][0] != "ID" ||
 										arquivo_texto[at][1] != "PRODUTO" ||
@@ -313,15 +313,16 @@
 										arquivo_texto[at][5] != "FIM_OFERTA" ||
 										arquivo_texto[at][6] != "PRECO_OFERTA" ||
 										arquivo_texto[at][7] != "MARCA" ||
-										arquivo_texto[at][8] != "REFERENCIA"
+										arquivo_texto[at][8] != "REFERENCIA"||
+										arquivo_texto[at][9] != "CARACTERISTICAS"
 									) {
 										console.info('arquivo_texto[at]', arquivo_texto[at]);
-										alert('Arquivo Tray invalido '+name+' "TRAY: Arquivo CSV (ID; PRODUTO; CATEGORIA; PRECO; INICIO_OFERTA; FIM_OFERTA; PRECO_OFERTA; MARCA)"');
+										alert('Arquivo Tray invalido '+name+' "TRAY: Arquivo CSV (ID; PRODUTO; CATEGORIA; PRECO; INICIO_OFERTA; FIM_OFERTA; PRECO_OFERTA; MARCA; REFERENCIA; CARACTERISTICAS)"');
 										return false;
 									}
 
 								}
-								if ( arquivoCSV_tray.length != 0 && at == 8) {
+								if ( arquivoCSV_tray.length != 0 && at == 6) { // AQUI 6 quando convertido pelo excel e 8 quando convertido pelo libreoffice
 									continue;
 								} else {
 									arquivoCSV_tray.push(arquivo_texto[at].clone());
@@ -544,6 +545,11 @@
 				if (produtos[produtos.length - 1][1].trim() == produtos[produtos.length - 1][35].trim()) {
 					produtos[produtos.length - 1][35] = '';
 				}
+				
+				// Aplicar Origem de acordo com a Marca (5 - Origem)
+				if (produtos[produtos.length - 1][5].trim() == "" || produtos[produtos.length - 1][5].trim() == 1) {
+					produtos[produtos.length - 1][5] = get_origem(produtos[produtos.length - 1][38]);
+				}
 			
 			
 				// Pegar Marca de acordo com TRAY (38 - Marca)
@@ -561,6 +567,7 @@
 							6: "PRECO_OFERTA"
 							7: "MARCA"
 							8: "REFERENCIA"
+							9: "CARACTERISTICAS"
 
 						*/
 						// Se for mesma referência
@@ -573,7 +580,27 @@
 							if (produtos[produtos.length - 1][57].trim() == "") {
 								produtos[produtos.length - 1][57] = get_categoriaTrayBling(arquivoCSV_tray[t][2].trim()); // 2 - Categoria
 							}
+							
+							// ORIGEM
+							var origem_tray = arquivoCSV_tray[t][9].trim();
+							if (origem_tray != "") {
+								var origem_novo = '';
+								if (origem_tray.indexOf('Origem: 0,') >= 0) {
+									origem_novo = 0;
+								}
+								if (origem_tray.indexOf('Origem: 1,') >= 0) {
+									origem_novo = 1;
+								}
+								if (origem_tray.indexOf('Origem: 2,') >= 0) {
+									origem_novo = 2;
+								}
+								
+								if (origem_novo != '') {
+									produtos[produtos.length - 1][5] = origem_novo;
+								}
+							}
 						}
+						
 					}
 				}
 				
@@ -582,11 +609,6 @@
 					if (produtos[produtos.length - 1][38].trim() != '') {
 						produtos[produtos.length - 1][33] = 'Marca:' + produtos[produtos.length - 1][38];	// atribuindo Marca na Tag
 					}
-				}
-				
-				// Aplicar Origem de acordo com a Marca (5 - Origem)
-				if (produtos[produtos.length - 1][5].trim() == "") {
-					produtos[produtos.length - 1][5] = get_origem(produtos[produtos.length - 1][38]);
 				}
 				
 				// Aplicar NCM de acordo com a categoria (4 - Classificação fiscal)
@@ -649,7 +671,7 @@
 		
 		
 		
-		var limite_arquivo = 5000;
+		var limite_arquivo = 500;
 		var csv_arquivos = [];
 		
 		var c_limite = 0;
@@ -841,7 +863,7 @@
 						{ type: "data:text/csv;charset=utf-8" });
 					
 					setTimeout(function(){
-						saveAs(blob2, 'OK-'+nome_arquivo_multiloja);
+						//saveAs(blob2, 'OK-'+nome_arquivo_multiloja);
 						
 						
 						

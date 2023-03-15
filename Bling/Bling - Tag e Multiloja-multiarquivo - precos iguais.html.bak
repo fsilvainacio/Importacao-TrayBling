@@ -296,14 +296,14 @@
 						
 						var jaAcabouPaiTray = false;
 						for (var at = 0; at < arquivo_texto.length; at++) {
-							if ( at >= 8 ) { // AQUI 6 quando convertido pelo excel e 8 quando convertido pelo libreoffice
+							if ( at >= 6 ) { // AQUI 6 quando convertido pelo excel e 8 quando convertido pelo libreoffice
 							
 								if ( arquivo_texto[at][0] == '' || jaAcabouPaiTray) {
 									jaAcabouPaiTray = true;
 									continue;
 								}
 								// Verificar cabeçalho
-								if (at == 8) { // AQUI 6 quando convertido pelo excel e 8 quando convertido pelo libreoffice
+								if (at == 6) { // AQUI 6 quando convertido pelo excel e 8 quando convertido pelo libreoffice
 									if (
 										arquivo_texto[at][0] != "ID" ||
 										arquivo_texto[at][1] != "PRODUTO" ||
@@ -321,7 +321,7 @@
 									}
 
 								}
-								if ( arquivoCSV_tray.length != 0 && at == 8) {
+								if ( arquivoCSV_tray.length != 0 && at == 6) { // AQUI 6 quando convertido pelo excel e 8 quando convertido pelo libreoffice
 									continue;
 								} else {
 									arquivoCSV_tray.push(arquivo_texto[at].clone());
@@ -464,6 +464,7 @@
 		55 - Valor ICMS ST para retenção
 		56 - Valor ICMS próprio do substituto
 		57 - Categoria do produto
+		58 - Informações Adicionais
 	*/
     
 	
@@ -543,6 +544,11 @@
 				if (produtos[produtos.length - 1][1].trim() == produtos[produtos.length - 1][35].trim()) {
 					produtos[produtos.length - 1][35] = '';
 				}
+				
+				// Aplicar Origem de acordo com a Marca (5 - Origem)
+				if (produtos[produtos.length - 1][5].trim() == "" || produtos[produtos.length - 1][5].trim() == 1) {
+					produtos[produtos.length - 1][5] = get_origem(produtos[produtos.length - 1][38]);
+				}
 			
 			
 				// Pegar Marca de acordo com TRAY (38 - Marca)
@@ -560,6 +566,7 @@
 							6: "PRECO_OFERTA"
 							7: "MARCA"
 							8: "REFERENCIA"
+							9: "ORIGEM"
 
 						*/
 						// Se for mesma referência
@@ -572,7 +579,13 @@
 							if (produtos[produtos.length - 1][57].trim() == "") {
 								produtos[produtos.length - 1][57] = get_categoriaTrayBling(arquivoCSV_tray[t][2].trim()); // 2 - Categoria
 							}
+							
+							// ORIGEM
+							if (arquivoCSV_tray[t][9].trim() != "") {
+								produtos[produtos.length - 1][5] = arquivoCSV_tray[t][9].trim();
+							}
 						}
+						
 					}
 				}
 				
@@ -581,11 +594,6 @@
 					if (produtos[produtos.length - 1][38].trim() != '') {
 						produtos[produtos.length - 1][33] = 'Marca:' + produtos[produtos.length - 1][38];	// atribuindo Marca na Tag
 					}
-				}
-				
-				// Aplicar Origem de acordo com a Marca (5 - Origem)
-				if (produtos[produtos.length - 1][5].trim() == "") {
-					produtos[produtos.length - 1][5] = get_origem(produtos[produtos.length - 1][38]);
 				}
 				
 				// Aplicar NCM de acordo com a categoria (4 - Classificação fiscal)
@@ -648,7 +656,7 @@
 		
 		
 		
-		var limite_arquivo = 5000;
+		var limite_arquivo = 500;
 		var csv_arquivos = [];
 		
 		var c_limite = 0;
@@ -666,7 +674,7 @@
 		}
 		
 		//var csv_cabecalho = 'ID;Codigo;Descricao;Unidade;Classificacao_fiscal;Origem;Preco;Valor_IPI_fixo;Observacoes;Situacao;Estoque;Preco_de_custo;Cod_no_fabricante;Fabricante;Localizacao;Estoque_maximo;Estoque_minimo;Peso_liquido_kg;Peso_bruto_kg;GTIN_EAN;GTIN_EAN_da_embalagem;Largura_do_Produto;Altura_do_Produto;Profundidade_do_produto;Data_Validade;Descricao_do_Produto_no_Fornecedor;Descricao_Complementar;Unidade_por_Caixa;Produto_Variacao;Tipo_Producao;Classe_de_enquadramento_do_IPI;Codigo_da_lista_de_servicos;Tipo_do_item;Grupo de Tags/Tags;Tributos;Código Pai;Código Integração;Grupo de Produtos;Marca;CEST;Volumes;Descrição curta;Cross-Docking;URL Imagens Externas;Link Externo;Meses Garantia;Clonar dados do pai;Condição do produto;Frete Grátis;Número FCI;Vídeo;Departamento;Unidade de medida';
-		var csv_cabecalho = '"ID";"Codigo";"Descricao";"Unidade";"Classificacao_fiscal";"Origem";"Preco";"Valor_IPI_fixo";"Observacoes";"Situacao";"Estoque";"Preco_de_custo";"Cod_no_fabricante";"Fabricante";"Localizacao";"Estoque_maximo";"Estoque_minimo";"Peso_liquido_kg";"Peso_bruto_kg";"GTIN_EAN";"GTIN_EAN_da_embalagem";"Largura_do_Produto";"Altura_do_Produto";"Profundidade_do_produto";"Data_Validade";"Descricao_do_Produto_no_Fornecedor";"Descricao_Complementar";"Unidade_por_Caixa";"Produto_Variacao";"Tipo_Producao";"Classe_de_enquadramento_do_IPI";"Codigo_da_lista_de_servicos";"Tipo_do_item";"Grupo de Tags/Tags";"Tributos";"Código Pai";"Código Integração";"Grupo de Produtos";"Marca";"CEST";"Volumes";"Descrição curta";"Cross-Docking";"URL Imagens Externas";"Link Externo";"Meses Garantia";"Clonar dados do pai";"Condição do produto";"Frete Grátis";"Número FCI";"Vídeo";"Departamento";"Unidade de medida";"Preço de compra";"Valor base ICMS ST para retenção";"Valor ICMS ST para retenção";"Valor ICMS próprio do substituto";"Categoria do produto"';
+		var csv_cabecalho = '"ID";"Codigo";"Descricao";"Unidade";"Classificacao_fiscal";"Origem";"Preco";"Valor_IPI_fixo";"Observacoes";"Situacao";"Estoque";"Preco_de_custo";"Cod_no_fabricante";"Fabricante";"Localizacao";"Estoque_maximo";"Estoque_minimo";"Peso_liquido_kg";"Peso_bruto_kg";"GTIN_EAN";"GTIN_EAN_da_embalagem";"Largura_do_Produto";"Altura_do_Produto";"Profundidade_do_produto";"Data_Validade";"Descricao_do_Produto_no_Fornecedor";"Descricao_Complementar";"Unidade_por_Caixa";"Produto_Variacao";"Tipo_Producao";"Classe_de_enquadramento_do_IPI";"Codigo_da_lista_de_servicos";"Tipo_do_item";"Grupo de Tags/Tags";"Tributos";"Código Pai";"Código Integração";"Grupo de Produtos";"Marca";"CEST";"Volumes";"Descrição curta";"Cross-Docking";"URL Imagens Externas";"Link Externo";"Meses Garantia";"Clonar dados do pai";"Condição do produto";"Frete Grátis";"Número FCI";"Vídeo";"Departamento";"Unidade de medida";"Preço de compra";"Valor base ICMS ST para retenção";"Valor ICMS ST para retenção";"Valor ICMS próprio do substituto";"Categoria do produto";"Informações Adicionais"';
 		var BOM = "\uFEFF";
 		
 		console.info('csv_arquivos.length', csv_arquivos.length)
@@ -840,7 +848,7 @@
 						{ type: "data:text/csv;charset=utf-8" });
 					
 					setTimeout(function(){
-						saveAs(blob2, 'OK-'+nome_arquivo_multiloja);
+						//saveAs(blob2, 'OK-'+nome_arquivo_multiloja);
 						
 						
 						

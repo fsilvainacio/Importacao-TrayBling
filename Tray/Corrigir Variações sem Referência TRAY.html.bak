@@ -191,6 +191,7 @@
 			
 			if (fileArr[i].length) {
 			
+				fileArr[i] = fileArr[i].replace('&amp;', "");
 				var fileLine = fileArr[i].split(';'); // Separar por valor
 				
 				switch (status_arquivo) {
@@ -318,8 +319,6 @@
 							status_arquivo = 8;  // fim
 							continue;
 						}
-						
-						console.info(v_indexREFERENCIA, 'fileLine', fileLine, fileLine[v_indexREFERENCIA])
 						
 						var referencia_variacao = fileLine[v_indexREFERENCIA].trim();
 						

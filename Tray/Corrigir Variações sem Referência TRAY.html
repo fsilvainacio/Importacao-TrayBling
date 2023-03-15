@@ -191,6 +191,7 @@
 			
 			if (fileArr[i].length) {
 			
+				fileArr[i] = fileArr[i].replace('&amp;', "");
 				var fileLine = fileArr[i].split(';'); // Separar por valor
 				
 				switch (status_arquivo) {
@@ -387,19 +388,19 @@
 							variacoes.push(fileLine.clone());
 							
 							// Verifica se há espaço na referencia
-							if (referencia_v.indexOf(' ') >= 0) {
-								erro_comEspaco += '<tr> <td>FILHO</td> <td>'+id_v+'</td> <td>'+referencia_v+'</td> <td>'+produto_v+'</td></tr>';
+							if (referencia_variacao.indexOf(' ') >= 0) {
+								erro_comEspaco += '<tr> <td>FILHO</td> <td>'+id_v+'</td> <td>'+referencia_variacao+'</td> <td>'+produto_v+'</td></tr>';
 							}
 							
 							// Verifica se há virgula na referencia
-							if (referencia_v.indexOf(',') >= 0) {
-								erro_comVirgula += '<tr> <td>FILHO</td> <td>'+id_v+'</td> <td>'+referencia_v+'</td> <td>'+produto_v+'</td></tr>';
+							if (referencia_variacao.indexOf(',') >= 0) {
+								erro_comVirgula += '<tr> <td>FILHO</td> <td>'+id_v+'</td> <td>'+referencia_variacao+'</td> <td>'+produto_v+'</td></tr>';
 							}
 							
 							// Verifica se a referencia está repetida.
 							for (var l=0; l<variacoes.length -1; l++) {
-								if (referencia_v == variacoes[l][v_indexREFERENCIA]) {
-									erro_refRepetida += '<tr> <td>FILHO</td> <td>'+id_v+'</td> <td>'+referencia_v+'</td> <td>'+produto_v+'</td></tr>';
+								if (referencia_variacao == variacoes[l][v_indexREFERENCIA]) {
+									erro_refRepetida += '<tr> <td>FILHO</td> <td>'+id_v+'</td> <td>'+referencia_variacao+'</td> <td>'+produto_v+'</td></tr>';
 								}
 							}
 							
